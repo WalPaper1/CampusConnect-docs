@@ -1,0 +1,23 @@
+@startuml
+actor "Étudiant" as Etu
+boundary "Interface Web" as UI
+control "Contrôleur" as Ctrl
+entity "Evenement" as Evt
+entity "Inscription" as Insc
+
+Etu -> UI : Clic sur "S'inscrire"
+UI -> Ctrl : demanderInscription(idEtu, idEvt)
+Ctrl -> Evt : verifierPlaces(idEvt)
+Evt --> Ctrl : placesRestantes, dejaInscrit
+
+alt Places > 0 ET non inscrit
+  Ctrl -> Insc : creerInscription(idEtu, idEvt)
+  Insc --> Ctrl : confirmation
+  Ctrl -> Evt : decrementerPlaces()
+  Ctrl --> UI : Succès ("Inscrit")
+  UI --> Etu : Affiche confirmation
+else Événement complet OU déjà inscrit
+  Ctrl --> UI : Refus ("Complet" / "Déjà inscrit")
+  UI --> Etu : Bloque bouton et affiche erreur
+end
+@enduml
