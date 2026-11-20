@@ -1,0 +1,30 @@
+@startuml
+class Etudiant {
+  - idEtudiant : int
+  - nom : String
+  - prenom : String
+  - email : String
+  + consulterEvenements()
+  + sInscrire()
+}
+
+class Evenement {
+  - idEvenement : int
+  - titre : String
+  - dateHeure : DateTime
+  - lieu : String
+  - capaciteMax : int
+  + placesDisponibles() : int
+}
+
+class Inscription {
+  - idInscription : int
+  - dateInscription : DateTime
+  - statut : String
+  + confirmer()
+  + annuler()
+}
+
+Etudiant "1" -- "0..*" Inscription : effectue >
+Evenement "1" -- "0..*" Inscription : concerne >
+@enduml
